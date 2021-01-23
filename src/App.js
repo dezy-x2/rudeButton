@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import TxtElement from './TxtElement/TxtElement';
 import Submission from './Submission/Submission';
+import CrtAcc from "./CrtAcc/crtAcc";
 
 class App extends React.Component {
   constructor(props) {
@@ -41,8 +42,10 @@ class App extends React.Component {
   render() {
   return (
     <div>
+      
     <div className="App">
       <h1 className="title">Go on. Press the button, I know you want to</h1>
+      <CrtAcc />
       <button className="innButton" onClick={this.buttonPress}>Just an innocent button</button>
     </div>
       {this.state.insult && <TxtElement />}
