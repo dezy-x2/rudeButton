@@ -1,0 +1,8 @@
+.insult {
+  position: relative;
+  top: 250px;
+  /* left: 300px; */
+  display: block;
+  width: auto;
+  margin: 2px;
+}
