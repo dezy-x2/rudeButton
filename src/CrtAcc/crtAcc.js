@@ -12,12 +12,14 @@ class CrtAcc extends React.Component {
             password: "",
             created: "",
             insult: this.insultGenarator(),
+            apiResp: "",
         }
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.sendToApi = this.sendToApi.bind(this);
         this.insultGenarator = this.insultGenarator.bind(this);
+        this.handleResp = this.handleResp.bind(this);
     }
 
     insultGenarator() {
@@ -36,18 +38,29 @@ class CrtAcc extends React.Component {
 
       handleClick() {
           if (this.state.username !== "" && this.state.password !== ""){
-              this.setState({ created: `Created!, your insult is '${this.state.insult}'`, username: "", password: "" });
+              //this.setState({ created: `Created!, your insult is '${this.state.insult}'`, username: "", password: "" });
               this.sendToApi();
           } else {
               this.setState({ created: "Both fields must be filled in in order to process request" })
           }
       }
 
-      sendToApi() {
+        async sendToApi() {
         let username = this.state.username;
         let password = this.state.password;
         let insult = this.state.insult;
-        fetch(`http://localhost:9000/crtacc?username=${username}&password=${password}&phrase=${insult}`)
+        await fetch(`http://localhost:9000/crtacc?username=${username}&password=${password}&phrase=${insult}`)
+        .then(res => res.status)
+        .then(res => this.handleResp(res));
+      }
+
+      handleResp(status) {
+          if (status === 200) {
+            this.setState({ created: `Created!, your insult is '${this.state.insult}'`, username: "", password: "" });
+          } else {
+              this.setState({ created: "Sorry something has gone wrong please try again" });
+          }
+          
       }
 
     render() {
@@ -64,7 +77,8 @@ class CrtAcc extends React.Component {
                 </form>
                 <button onClick={this.handleClick} >Confirm</button>
                 <br />
-                {this.state.created}
+                {this.state.created} 
+                {this.state.apiResp}
             </div>
         )
     }
