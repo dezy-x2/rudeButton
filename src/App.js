@@ -11,11 +11,14 @@ class App extends React.Component {
     this.state = {
       insult: false,
       submitted: false,
-      complaint: ''
+      complaint: '',
+      accButton: false,
     }
     this.buttonPress = this.buttonPress.bind(this);
     this.pressSubmit = this.pressSubmit.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
+    this.handleAccButton = this.handleAccButton.bind(this);
+    this.buttonLabel = this.buttonLabel.bind(this);
   }
 
 
@@ -35,17 +38,33 @@ class App extends React.Component {
     }
   }
 
+  handleAccButton = () => {
+    if(!this.state.accButton) {
+      this.setState({ accButton: true });
+    } else {
+      this.setState({ accButton: false });
+    }
+  }
+
   handleTermChange(event) {
     this.setState({ complaint: event.target.value });
+  }
+
+  buttonLabel() {
+    if(!this.state.accButton) {
+      return "Want a custom insult?";
+    } else {
+      return "Close";
+    }
   }
 
   render() {
   return (
     <div>
-      
     <div className="App">
       <h1 className="title">Go on. Press the button, I know you want to</h1>
-      <CrtAcc />
+  <button className="accbutton" onClick={this.handleAccButton}>{this.buttonLabel()}</button>
+      {this.state.accButton && <CrtAcc />}
       <button className="innButton" onClick={this.buttonPress}>Just an innocent button</button>
     </div>
       {this.state.insult && <TxtElement />}
