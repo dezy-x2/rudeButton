@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var databse = require("./database");
 const database = require('./database');
 
 router.get("/crt", (req, res, next) => {
@@ -9,10 +8,16 @@ router.get("/crt", (req, res, next) => {
             res.status(500).send("Username is already registered")
         }
     }
+
+    database.push({
+        username: req.query.username,
+        password: req.query.password,
+        phrase: req.query.phrase
+    })
     res.status(200).send("success");
-    console.log(databse);
-    console.log("Heyy");
-    console.log(req.query);
+    // console.log(databse);
+    // console.log("Heyy");
+    // console.log(req.query);
     
 })
 

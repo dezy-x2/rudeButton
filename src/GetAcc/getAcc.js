@@ -42,13 +42,6 @@ class GetAcc extends React.Component {
 
       handleResp(res) {
           this.setState({ insult: `${res}`, username: "", password: "" })
-
-        // if (res.status === 200) {
-        //   this.setState({ insult: `Created!, your insult is '${res.text()}',${res.status}`, username: "", password: "" });
-        //   alert("he");
-        // } else {
-        //     this.setState({ insult: "Sorry something has gone wrong please try again" });
-        // }
         
     }
 
