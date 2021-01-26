@@ -38,7 +38,6 @@ class CrtAcc extends React.Component {
 
       handleClick() {
           if (this.state.username !== "" && this.state.password !== ""){
-              //this.setState({ created: `Created!, your insult is '${this.state.insult}'`, username: "", password: "" });
               this.sendToApi();
           } else {
               this.setState({ created: "Both fields must be filled in in order to process request" })
@@ -49,7 +48,7 @@ class CrtAcc extends React.Component {
         let username = this.state.username;
         let password = this.state.password;
         let insult = this.state.insult;
-        await fetch(`http://localhost:9000/crtacc?username=${username}&password=${password}&phrase=${insult}`)
+        await fetch(`http://localhost:9000/acc/crt?username=${username}&password=${password}&phrase=${insult}`)
         .then(res => res.status)
         .then(res => this.handleResp(res));
       }
@@ -58,7 +57,7 @@ class CrtAcc extends React.Component {
           if (status === 200) {
             this.setState({ created: `Created!, your insult is '${this.state.insult}'`, username: "", password: "" });
           } else {
-              this.setState({ created: "Sorry something has gone wrong please try again" });
+              this.setState({ created: "Sorry something has gone wrong, that username may already be taken" });
           }
           
       }
@@ -77,8 +76,7 @@ class CrtAcc extends React.Component {
                 </form>
                 <button onClick={this.handleClick} >Confirm</button>
                 <br />
-                {this.state.created} 
-                {this.state.apiResp}
+                {this.state.created}
             </div>
         )
     }

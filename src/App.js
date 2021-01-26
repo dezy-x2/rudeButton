@@ -4,6 +4,7 @@ import './App.css';
 import TxtElement from './TxtElement/TxtElement';
 import Submission from './Submission/Submission';
 import CrtAcc from "./CrtAcc/crtAcc";
+import GetAcc from "./GetAcc/getAcc";
 
 class App extends React.Component {
   constructor(props) {
@@ -13,12 +14,14 @@ class App extends React.Component {
       submitted: false,
       complaint: '',
       accButton: false,
+      prevUser: false,
     }
     this.buttonPress = this.buttonPress.bind(this);
     this.pressSubmit = this.pressSubmit.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
     this.handleAccButton = this.handleAccButton.bind(this);
     this.buttonLabel = this.buttonLabel.bind(this);
+    this.handlePrevUserButton = this.handlePrevUserButton.bind(this);
   }
 
 
@@ -40,9 +43,17 @@ class App extends React.Component {
 
   handleAccButton = () => {
     if(!this.state.accButton) {
-      this.setState({ accButton: true });
+      this.setState({ accButton: true, prevUser: false });
     } else {
       this.setState({ accButton: false });
+    }
+  }
+
+  handlePrevUserButton = () => {
+    if(!this.state.prevUser) {
+      this.setState({ prevUser: true, accButton: false })
+    } else {
+      this.setState({ prevUser: false })
     }
   }
 
@@ -51,10 +62,10 @@ class App extends React.Component {
   }
 
   buttonLabel() {
-    if(!this.state.accButton) {
-      return "Want a custom insult?";
-    } else {
+    if(this.state.accButton || this.state.prevUser) {
       return "Close";
+    } else if (!this.state.accButton) {
+      return "Want a custom insult?";
     }
   }
 
@@ -65,6 +76,8 @@ class App extends React.Component {
       <h1 className="title">Go on. Press the button, I know you want to</h1>
   <button className="accbutton" onClick={this.handleAccButton}>{this.buttonLabel()}</button>
       {this.state.accButton && <CrtAcc />}
+      {this.state.accButton && <button className="prevUser" onClick={this.handlePrevUserButton}>Do you already have an account?</button>}
+      {this.state.prevUser && <GetAcc />}
       <button className="innButton" onClick={this.buttonPress}>Just an innocent button</button>
     </div>
       {this.state.insult && <TxtElement />}
