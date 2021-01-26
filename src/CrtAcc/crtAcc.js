@@ -37,11 +37,17 @@ class CrtAcc extends React.Component {
       }
 
       handleClick() {
-          if (this.state.username !== "" && this.state.password !== ""){
-              this.sendToApi();
+          const rand = Math.random();
+          if (rand >= 0.01) {
+            if (this.state.username !== "" && this.state.password !== ""){
+                this.sendToApi();
+            } else {
+                this.setState({ created: "Both fields must be filled in in order to process request" })
+            }
           } else {
-              this.setState({ created: "Both fields must be filled in in order to process request" })
+              this.setState({ created: "Request denied - reason: 'Too much of a loser'" });
           }
+          
       }
 
         async sendToApi() {
