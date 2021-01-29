@@ -54,13 +54,13 @@ class CrtAcc extends React.Component {
         let username = this.state.username;
         let password = this.state.password;
         let insult = this.state.insult;
-        await fetch(`http://localhost:9000/acc/crt?username=${username}&password=${password}&phrase=${insult}`)
-        .then(res => res.status)
-        .then(res => this.handleResp(res));
+        const res = await fetch(`http://localhost:9000/acc/crt?username=${username}&password=${password}&phrase=${insult}`);
+        const status = await res.status;
+        this.handleResp(status);
       }
 
       handleResp(status) {
-          if (status === 200) {
+          if (199 < status < 300) {
             this.setState({ created: `Created!, your insult is '${this.state.insult}'`, username: "", password: "" });
           } else {
               this.setState({ created: "Sorry something has gone wrong, that username may already be taken" });

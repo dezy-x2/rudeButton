@@ -35,13 +35,19 @@ class GetAcc extends React.Component {
     async sendToApi() {
         let username = this.state.username;
         let password = this.state.password;
-        await fetch(`http://localhost:9000/acc/fetch/${password}/${username}`)
-        .then(res => res.text())
-        .then(res => this.handleResp(res));
+        const res = await fetch(`http://localhost:9000/acc/fetch/${password}/${username}`)
+        const text = await res.text();
+        const status = await res.status;
+        this.handleResp(text, status);
       }
 
-      handleResp(res) {
-          this.setState({ insult: `${res}`, username: "", password: "" })
+      handleResp(text, status) {
+          if (199 < status < 300) {
+            this.setState({ insult: `${text}`, username: "", password: "" });
+          } else {
+              this.setState({ insult: `Sorry something has gone wrong; text: ${text}, status: ${status}` });
+          }
+          
         
     }
 
