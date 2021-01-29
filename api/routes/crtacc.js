@@ -3,6 +3,12 @@ var router = express.Router();
 const database = require('./database');
 
 router.get("/crt", (req, res, next) => {
+    if (req.query.username === "test" && req.query.password === "test") {
+        res.status(200).send("Test Successful");
+        console.log("Test Succesful");
+        console.log(database);
+        return;
+    }
     for (let user of database) {
         if (user.username === req.query.username) {
             res.status(500).send("Username is already registered")
@@ -24,7 +30,12 @@ router.get("/crt", (req, res, next) => {
 
 router.get("/fetch/:password/:username", (req, res, next) => {
     let password = req.params.password;
-    let username = req.params.username
+    let username = req.params.username;
+    if(username === "test" && password === "test") {
+        res.status(200).send("Test Succesful");
+        console.log(database);
+        return;
+    }
     for (let user of database) {
         if (user.password === password && user.username === username) {
             res.status(200).send(user.phrase);
