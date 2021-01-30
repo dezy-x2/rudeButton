@@ -35,7 +35,7 @@ class GetAcc extends React.Component {
     async sendToApi() {
         let username = this.state.username;
         let password = this.state.password;
-        const res = await fetch(`http://localhost:9000/acc/fetch/${password}/${username}`)
+        const res = await fetch(`http://localhost:9000/acc/fetch/${password}/${username}`);
         const text = await res.text();
         const status = await res.status;
         this.handleResp(text, status);

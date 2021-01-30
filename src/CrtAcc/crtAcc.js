@@ -54,7 +54,13 @@ class CrtAcc extends React.Component {
         let username = this.state.username;
         let password = this.state.password;
         let insult = this.state.insult;
-        const res = await fetch(`http://localhost:9000/acc/crt?username=${username}&password=${password}&phrase=${insult}`);
+        const res = await fetch(`http://localhost:9000/acc/crt`, {
+            method: "POST",
+            body: JSON.stringify({"username": username, "password": password, "phrase": insult}),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
         const status = await res.status;
         this.handleResp(status);
       }

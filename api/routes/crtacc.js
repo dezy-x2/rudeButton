@@ -1,25 +1,30 @@
 var express = require('express');
 var router = express.Router();
 const database = require('./database');
+const bodyParser = require("body-parser");
 
-router.get("/crt", (req, res, next) => {
-    if (req.query.username === "test" && req.query.password === "test") {
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+
+router.post("/crt", (req, res, next) => {
+    if (req.body.username === "test" && req.body.password === "test") {
         res.status(200).send("Test Successful");
         console.log("Test Succesful");
         console.log(database);
+        console.log(req.body);
         return;
     }
     for (let user of database) {
-        if (user.username === req.query.username) {
+        if (user.username === req.body.username) {
             res.status(500).send("Username is already registered")
             return;
         }
     }
 
     database.push({
-        username: req.query.username,
-        password: req.query.password,
-        phrase: req.query.phrase
+        username: req.body.username,
+        password: req.body.password,
+        phrase: req.body.phrase
     })
     res.status(200).send("success");
     // console.log(databse);
